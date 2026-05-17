@@ -1,5 +1,23 @@
+import { useState, useEffect } from 'react'
+import type { UserContextType } from './types'
+import { UserContext } from './contexts/UserContext'
+import { RouterProvider } from 'react-router/dom'
+import { router } from './router'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
+
 export function App() {
+  const [user, setUser] = useState<UserContextType['user']>('')
+
+  useEffect(() => {
+    setUser('John Doe')
+  }, [])
+
   return (
-    <h1>Hello world!</h1>
+    <Provider store={store}>
+      <UserContext value={{ user, setUser }}>
+        <RouterProvider router={router} />
+      </UserContext>
+    </Provider>
   )
 }
