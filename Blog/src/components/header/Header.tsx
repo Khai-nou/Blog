@@ -19,8 +19,14 @@ export function Header(): React.ReactElement {
       <nav className={styles.navbar}>
         <NavLink to="/" className="">Logo</NavLink>
         <ul className="">
-          <li className="nav-item">
-            <NavLink className="" to="/all-posts">All Posts</NavLink>
+          <li className="">
+            <NavLink className="" to="/">All Posts</NavLink> 
+          </li>
+          <li className="">
+            <NavLink className="" to="/sign-in">Sign In</NavLink> 
+          </li>
+          <li className="">
+            <NavLink className="" to="/sign-up">Sign Up</NavLink> 
           </li>
         </ul>
         <form className="" role="search">
