@@ -4,22 +4,30 @@ import type { PostsState, PostModel } from '../../types'
 import { PostCard } from '../postCard/PostCard'
 import { useEffect, useState, useMemo } from 'react'
 import { fetchPosts } from '../../redux/posts-slice'
+import { useParams, NavLink } from 'react-router'
+import { buildPagination } from '../../utils/buildPagination'
+
+type PaginationProps = {
+  isActive: boolean
+}
 
 export function PostsListMain(): React.ReactElement {
-  const { data: posts, loading, error } = useAppSelector((state): PostsState => state.posts)
+  const { currentPage } = useParams()
+  const { data: posts, totalPages, loading, error } = useAppSelector((state): PostsState => state.posts)
   const dispatch = useAppDispatch()
 
-  // false - без сортировки | 'az' - A-Z
-  const [sortOrder, setSortOrder] = useState<false | 'az'>(false)
+  // false - без сортировки | 'asc' - A-Z
+  const [sortOrder, setSortOrder] = useState<false | 'asc'>(false)
 
   useEffect((): void => {
-    dispatch(fetchPosts())
-  }, [dispatch])
+    const offset = (Number(currentPage) - 1) * 15
+    dispatch(fetchPosts({ limit: 15, offset }))
+  }, [currentPage, dispatch])
 
   // возвращаем отсортированную копию
   const sortedPosts = useMemo(() => {
     if (!posts) return []
-    if (sortOrder === 'az') {
+    if (sortOrder === 'asc') {
       return [...posts].sort((a, b) => a.title.localeCompare(b.title))
     }
     return posts
@@ -27,17 +35,17 @@ export function PostsListMain(): React.ReactElement {
 
   // обработчик для кнопки сортировки
   const handleClickButtonSort = (): void => {
-    setSortOrder((prev) => (prev === 'az' ? false : 'az'))
+    setSortOrder((prev) => (prev === 'asc' ? false : 'asc'))
   }
 
   function renderPostsList() {
-    if (error || loading || !posts || posts.length === 0) {
+    if (loading || !posts || posts.length === 0) {
       return null
     }
 
     return (
       <div className={styles.flex}>
-        {sortedPosts.map((post: PostModel) => (
+        {sortedPosts.map((post: PostModel): React.ReactElement => (
           <div key={post.id} className={styles.post}>
             <PostCard {...post} />
           </div>
@@ -66,15 +74,51 @@ export function PostsListMain(): React.ReactElement {
     )
   }
 
+  function renderPagination(): React.ReactElement | null {
+    if (totalPages <= 1 || loading || error || posts.length === 0) {
+      return null
+    }
+
+    function resolveActiveClass({ isActive }: PaginationProps) {
+      return isActive ? `${styles.paginationLink} ${styles.active}` : `${styles.paginationLink}`
+    }
+
+    const paginationScheme = buildPagination(Number(currentPage), totalPages)
+    return (
+      <nav>
+        <ul className={styles.pagination}>
+          {paginationScheme.map((page: number | string) => {
+
+            if (page === '...') {
+              return (
+                <li className={styles.paginationItem} key={Date.now().toString(36) + Math.random().toString(36).substr(2)}>
+                  <span>{page}</span>
+                </li>
+              )
+            }
+
+            return (
+              <li className={styles.paginationItem} key={page}>
+                <NavLink className={resolveActiveClass} to={`/all/${page}`}>{page}</NavLink>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+    )
+  }
+
   return (
     <>
       <button className={styles.button} onClick={handleClickButtonSort} disabled={loading || !!error}>
-        {sortOrder === 'az' ? 'Reset sorting' : 'Sort by name A-Z'}
+        {sortOrder === 'asc' ? 'Reset sorting' : 'Sort by name A-Z'}
       </button>
 
+      {renderPagination()}
       {renderPostsList()}
       {renderLoading()}
       {renderError()}
+      {renderPagination()}
     </>
   )
 }

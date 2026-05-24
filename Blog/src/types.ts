@@ -23,6 +23,17 @@ export type PostProps = PostModel
 
 export type PostsState = {
   data: PostModel[]
+  totalPages: number
   loading: boolean
   error: boolean
+}
+
+export type FetchPostsParams = {
+  limit: number
+  offset: number
+}
+
+export type FetchPostsResponse = {
+  results: PostModel[]
+  count: number
 }

@@ -16,6 +16,10 @@ const routes: RouteObject[] = [
         Component: Main,
       },
       {
+        path: '/all/:currentPage',
+        Component: Main,
+      },
+      {
         path: '/posts/:postId',
         Component: Post,
       },

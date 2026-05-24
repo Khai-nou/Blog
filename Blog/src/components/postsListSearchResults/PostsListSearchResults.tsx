@@ -7,12 +7,14 @@ import { fetchPosts } from '../../redux/posts-slice'
 import { useParams } from 'react-router'
 
 export function PostsListSearchResults(): React.ReactElement {
+  const { currentPage } = useParams()
   const { data: posts, loading, error } = useAppSelector((state): PostsState => state.posts)
   const dispatch = useAppDispatch()
 
   useEffect((): void => {
-    dispatch(fetchPosts())
-  }, [])
+    const offset = (Number(currentPage) - 1) * 10
+    dispatch(fetchPosts({ limit: 10, offset }))
+  }, [currentPage, dispatch])
 
   const { searchQuery } = useParams()
 
@@ -51,11 +53,7 @@ export function PostsListSearchResults(): React.ReactElement {
     }
 
     return (
-      <div className="d-flex justify-content-center align-items-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <div>Loading...</div>
     )
   }
 
@@ -65,9 +63,7 @@ export function PostsListSearchResults(): React.ReactElement {
     }
 
     return (
-      <div className="d-flex justify-content-center align-items-center">
-        <div className="alert alert-danger" role="alert">Loading error</div>
-      </div>
+      <div>Loading error</div>
     )
   }
 

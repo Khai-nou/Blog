@@ -9,21 +9,27 @@ import { Title } from '../title/Title'
 export function PostComponent(): React.ReactElement {
   const { postId } = useParams<string>()
 
-  const { data: posts } = useAppSelector((state): PostsState => state.posts)
+  const { data: posts, loading } = useAppSelector((state): PostsState => state.posts)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(fetchPosts())
-  }, [postId])
+  useEffect((): void => {
+    dispatch(fetchPosts({ limit: 500, offset: 0 }))
+  }, [dispatch])
 
   function renderPosts() {
     if (posts) {
       const post = posts.find((item: PostModel) => item.id === Number(postId))
-      console.log(posts)
-      console.log(post)
+
+      if (loading) {
+        return <div>Loading post...</div>
+      }
+
+      if (!post) {
+        return <div>Post not found.</div>
+      }
+
       return (
         <>
-          {/* <h2 className={styles.header}>{post?.title}</h2> */}
           <Title>{post?.title}</Title>
           <div className={styles.imageWrapper}>
             <img className={styles.image} src={post?.image_url} alt="Post Image" />

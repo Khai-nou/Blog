@@ -5,6 +5,7 @@ import type { UserContextType } from '../../types'
 import { UserContext } from '../../contexts/UserContext'
 import styles from './Header.module.scss'
 import { Link } from 'react-router'
+import logo from '../../assets/logo.png'
 
 type HeaderProps = {
   isActive: boolean
@@ -25,10 +26,10 @@ export function Header(): React.ReactElement {
   return (
     <header>
       <nav className={styles.navbar}>
-        <NavLink to="/" className={styles.logo}><img src='src/assets/logo.png' /></NavLink>
+        <NavLink to="/all/1" className={styles.logo}><img src={logo} /></NavLink>
         <ul className={styles.nav_list}>
           <li className={styles.nav_item}>
-            <NavLink className={resolveActiveClass} to="/">All Posts</NavLink> 
+            <NavLink className={resolveActiveClass} to="/all/1">All Posts</NavLink> 
           </li>
           <li className={styles.nav_item}>
             <NavLink className={resolveActiveClass} to="/sign-in">Sign In</NavLink> 
