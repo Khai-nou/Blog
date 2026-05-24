@@ -10,7 +10,7 @@ export function App() {
   const [user, setUser] = useState<UserContextType['user']>('')
 
   useEffect(() => {
-    setUser('John Doe')
+    setUser('Laurence Gregory Watkins')
   }, [])
 
   return (

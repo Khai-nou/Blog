@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import styles from './island.module.scss'
+import styles from './Island.module.scss'
 
 type IslandProps = {
   children: ReactNode

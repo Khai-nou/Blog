@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PostModel, PostsState } from '../types'
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const response = await fetch('https://studapi.teachmeskills.by/blog/posts/?limit=11')
+  const response = await fetch('https://api.spaceflightnewsapi.net/v4/blogs/')
   const data = await response.json()
   return data.results
 })

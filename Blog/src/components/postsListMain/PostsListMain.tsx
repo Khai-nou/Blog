@@ -17,19 +17,17 @@ export function PostsListMain(): React.ReactElement {
     if (error || loading) {
       return null
     }
-    
+
     if (posts) {
       return (
-        <div className={styles.grid}>
-          <div className={styles.post}>
-            {posts.map((post: PostModel) => {
-              return (
-                <div key={post.id}>
-                  <PostCard {...post} />
-                </div>
-              )
-            })}
-          </div>
+        <div className={styles.flex}>
+          {posts.map((post: PostModel) => {
+            return (
+              <div key={post.id} className={styles.post}>
+                <PostCard {...post} />
+              </div>
+            )
+          })}
         </div>
       )
     }

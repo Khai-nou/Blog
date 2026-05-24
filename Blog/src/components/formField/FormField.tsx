@@ -1,3 +1,5 @@
+import styles from './FormField.module.scss'
+
 type FormFieldProps = {
   id: string
   label: string
@@ -14,7 +16,7 @@ export function FormField({ id, label, type, value, valueChecked, onChange, ref 
     <div>
       <input
         ref={ref}
-        className="form-control"
+        className={styles.formField}
         type="checkbox"
         id={id}
         checked={valueChecked}
@@ -28,7 +30,7 @@ export function FormField({ id, label, type, value, valueChecked, onChange, ref 
       {label && <label htmlFor={id}>{label}</label>}
       <input
         ref={ref}
-        className="form-control"
+        className={styles.formField}
         type={type}
         id={id || crypto.randomUUID()}
         value={value}

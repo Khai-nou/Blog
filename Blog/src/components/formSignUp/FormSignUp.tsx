@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FormField } from '../formField/FormField'
 import styles from './FormSignUp.module.scss'
 import { ChangeEvent } from 'react'
+import { Link } from 'react-router'
 
 type formSignUpProps = {
   name?: string
@@ -45,7 +46,7 @@ export function FormSignUp(props: formSignUpProps): React.ReactElement {
 
   return (
     <form onSubmit={handleSubmitForm}>
-      <div className="mb-3">
+      <div>
         <FormField
           id="name"
           label="Name"
@@ -53,7 +54,7 @@ export function FormSignUp(props: formSignUpProps): React.ReactElement {
           value={props.name}
           onChange={handleChangeName} />
       </div>
-      <div className="mb-3">
+      <div>
         <FormField
           id="email"
           label="Email"
@@ -61,7 +62,7 @@ export function FormSignUp(props: formSignUpProps): React.ReactElement {
           value={props.email}
           onChange={handleChangeEmail} />
       </div>
-      <div className="mb-3">
+      <div>
         <FormField
           id="password"
           label="Password"
@@ -69,7 +70,7 @@ export function FormSignUp(props: formSignUpProps): React.ReactElement {
           value={props.password}
           onChange={handleChangePassword} />
       </div>
-      <div className="mb-5">
+      <div>
         <FormField
           id="passwordConfirm"
           label="Confirm password"
@@ -77,7 +78,8 @@ export function FormSignUp(props: formSignUpProps): React.ReactElement {
           value={props.passwordConfirm}
           onChange={handleChangePasswordConfirm} />
       </div>
-      <button type="submit" className={`btn btn-primary mb-3 ${styles.button}`}>Sign Up</button>
+      <button type="submit" className={styles.button}>Sign Up</button>
+      <p className={styles.text}>Already have an account? <Link to="/sign-in" className={styles.linkSignIn}>Sign In</Link></p>
     </form>
   )
 }

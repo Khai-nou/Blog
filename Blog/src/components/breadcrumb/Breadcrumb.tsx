@@ -1,4 +1,5 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
+import styles from './Breadcrumb.module.scss'
 
 type BreadcrumbProps = {
   children: ReactNode
@@ -7,8 +8,8 @@ type BreadcrumbProps = {
 
 export function Breadcrumb(props: BreadcrumbProps): React.ReactElement {
   return (
-    <div className="">
-      <span>{props.children}</span>
+    <div className={styles.breadcrumb}>
+      <span className={styles.breadcrumb}>{props.children}</span>
       <span>{props.postNumber}</span>
     </div>
   )

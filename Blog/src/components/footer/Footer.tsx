@@ -5,8 +5,8 @@ export function Footer(): React.ReactElement {
   return (
     <footer className={styles.footer}>
       <div className={styles.wrapper}>
-        <div className="">Some text</div>
-        <div className="">Some text</div>
+        <div>© 2026, Khai-nou</div>
+        <div>All rights reserved</div>
       </div>
     </footer>
   )

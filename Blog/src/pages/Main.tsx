@@ -1,10 +1,11 @@
+import { Title } from "../components/title/Title";
 import { PostsListMain } from "../components/postsListMain/PostsListMain";
 
 export function Main(): React.ReactElement {
 
   return (
     <>
-      <div>Main page (latest)</div>
+      <Title>Posts</Title>
       <PostsListMain />
     </>
   )

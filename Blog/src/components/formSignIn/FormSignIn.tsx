@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FormField } from '../formField/FormField'
 import styles from './FormSignIn.module.scss'
 import { ChangeEvent } from 'react'
+import { Link, useNavigate } from 'react-router'
 
 type FormSignInProps = {
   email?: string
@@ -15,6 +16,7 @@ export function FormSignIn(props: FormSignInProps): React.ReactElement {
     email: email,
     password: password
   }
+  const navigate = useNavigate()
 
   function handleChangeEmail(event: ChangeEvent<HTMLInputElement>) {
     setEmail(event.target.value)
@@ -24,14 +26,16 @@ export function FormSignIn(props: FormSignInProps): React.ReactElement {
     setPassword(event.target.value)
   }
 
-  function handleSubmitForm(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmitForm(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log(formData)
+    navigate('/')
+    
+    return formData
   }
 
   return (
     <form onSubmit={handleSubmitForm}>
-      <div className="mb-3">
+      <div>
         <FormField
           id="email"
           label="Email"
@@ -39,7 +43,7 @@ export function FormSignIn(props: FormSignInProps): React.ReactElement {
           value={props.email}
           onChange={handleChangeEmail} />
       </div>
-      <div className="mb-1">
+      <div>
         <FormField
           id="password"
           label="Password"
@@ -47,8 +51,9 @@ export function FormSignIn(props: FormSignInProps): React.ReactElement {
           value={props.password}
           onChange={handleChangePassword} />
       </div>
-      <a className="mb-5 d-block" href="#">Reset password</a>
+      <a className={styles.text} href="#">Forgot password?</a>
       <button type="submit" className={styles.button}>Sign In</button>
+      <p className={styles.text}>No account? <Link className={styles.linkSignUp} to="/sign-up">Sign Up</Link></p>
     </form>
   )
 }

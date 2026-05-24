@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import type { PostModel, PostsState } from '../../types'
 import { useAppSelector, useAppDispatch } from '../../redux/store'
 import { fetchPosts } from '../../redux/posts-slice'
+import { Title } from '../title/Title'
 
 export function PostComponent(): React.ReactElement {
   const { postId } = useParams<string>()
@@ -22,12 +23,13 @@ export function PostComponent(): React.ReactElement {
       console.log(post)
       return (
         <>
-          <h2 className="">{post?.title}</h2>
+          {/* <h2 className={styles.header}>{post?.title}</h2> */}
+          <Title>{post?.title}</Title>
           <div className={styles.imageWrapper}>
-            <img className={styles.image} src={post?.image} alt="Post Image" />
+            <img className={styles.image} src={post?.image_url} alt="Post Image" />
           </div>
           <div className={styles.text}>
-            <p>{post?.text}</p>
+            <p>{post?.summary}</p>
           </div>
         </>
       )

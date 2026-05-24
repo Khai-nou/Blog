@@ -18,7 +18,7 @@ export function PostsListSearchResults(): React.ReactElement {
 
   // filter data by searchQuery
   const filteredPosts = posts.filter((item) => {
-    if (item.title.includes(searchQuery ?? '')) {
+    if (item.title.toLowerCase().includes(searchQuery?.toLowerCase() ?? '')) {
       return true
     } else {
       return false
@@ -32,16 +32,14 @@ export function PostsListSearchResults(): React.ReactElement {
 
     if (filteredPosts) {
       return (
-        <div className={styles.grid}>
-          <div className={styles.post}>
-            {filteredPosts.map((post: PostModel) => {
-              return (
-                <div key={post.id}>
-                  <PostCard {...post} />
-                </div>
-              )
-            })}
-          </div>
+        <div className={styles.flex}>
+          {filteredPosts.map((post: PostModel) => {
+            return (
+              <div key={post.id} className={styles.post}>
+                <PostCard {...post} />
+              </div>
+            )
+          })}
         </div>
       )
     }

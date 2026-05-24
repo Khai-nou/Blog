@@ -6,6 +6,10 @@ import { UserContext } from '../../contexts/UserContext'
 import styles from './Header.module.scss'
 import { Link } from 'react-router'
 
+type HeaderProps = {
+  isActive: boolean
+}
+
 export function Header(): React.ReactElement {
   const { user } = useContext<UserContextType>(UserContext)
   const [searchQuery, setSearchQuery] = useState('')
@@ -14,24 +18,28 @@ export function Header(): React.ReactElement {
     setSearchQuery(event.target.value)
   }
 
+  function resolveActiveClass({ isActive }: HeaderProps) {
+    return isActive ? `${styles.nav_link} ${styles.active}` : `${styles.nav_link}`
+  }
+
   return (
     <header>
       <nav className={styles.navbar}>
-        <NavLink to="/" className="">Logo</NavLink>
-        <ul className="">
-          <li className="">
-            <NavLink className="" to="/">All Posts</NavLink> 
+        <NavLink to="/" className={styles.logo}><img src='src/assets/logo.png' /></NavLink>
+        <ul className={styles.nav_list}>
+          <li className={styles.nav_item}>
+            <NavLink className={resolveActiveClass} to="/">All Posts</NavLink> 
           </li>
-          <li className="">
-            <NavLink className="" to="/sign-in">Sign In</NavLink> 
+          <li className={styles.nav_item}>
+            <NavLink className={resolveActiveClass} to="/sign-in">Sign In</NavLink> 
           </li>
-          <li className="">
-            <NavLink className="" to="/sign-up">Sign Up</NavLink> 
+          <li className={styles.nav_item}>
+            <NavLink className={resolveActiveClass} to="/sign-up">Sign Up</NavLink> 
           </li>
         </ul>
-        <form className="" role="search">
-          <input className="" type="search" placeholder="Search..." aria-label="Search" onChange={handleChangeInputSearch} />
-          <Link to={`/search-results/${searchQuery}`}><button className="" type="submit" disabled={!searchQuery}>Search</button></Link>
+        <form className={styles.form} role="search">
+          <input className={styles.input} type="search" placeholder="Search..." aria-label="Search" onChange={handleChangeInputSearch} />
+          <Link to={`/search-results/${searchQuery}`}><button className={styles.button} type="submit" disabled={!searchQuery}>Search</button></Link>
         </form>
         <UserPick userName={user}></UserPick>
       </nav>

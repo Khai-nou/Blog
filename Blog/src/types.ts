@@ -9,9 +9,9 @@ export type UserContextType = {
 
 export type PostModel = {
   id: number
-  image: string
-  text: string
-  date: string
+  image_url: string
+  summary: string
+  published_at: string
   lesson_num: number
   title: string
   description: string
