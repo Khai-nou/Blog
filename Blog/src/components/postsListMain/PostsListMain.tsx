@@ -2,35 +2,48 @@ import styles from './PostsListMain.module.scss'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import type { PostsState, PostModel } from '../../types'
 import { PostCard } from '../postCard/PostCard'
-import { useEffect } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { fetchPosts } from '../../redux/posts-slice'
 
 export function PostsListMain(): React.ReactElement {
   const { data: posts, loading, error } = useAppSelector((state): PostsState => state.posts)
   const dispatch = useAppDispatch()
 
+  // false - без сортировки | 'az' - A-Z
+  const [sortOrder, setSortOrder] = useState<false | 'az'>(false)
+
   useEffect((): void => {
     dispatch(fetchPosts())
-  }, [])
+  }, [dispatch])
 
-  function renderPosts() {
-    if (error || loading) {
+  // возвращаем отсортированную копию
+  const sortedPosts = useMemo(() => {
+    if (!posts) return []
+    if (sortOrder === 'az') {
+      return [...posts].sort((a, b) => a.title.localeCompare(b.title))
+    }
+    return posts
+  }, [posts, sortOrder])
+
+  // обработчик для кнопки сортировки
+  const handleClickButtonSort = (): void => {
+    setSortOrder((prev) => (prev === 'az' ? false : 'az'))
+  }
+
+  function renderPostsList() {
+    if (error || loading || !posts || posts.length === 0) {
       return null
     }
 
-    if (posts) {
-      return (
-        <div className={styles.flex}>
-          {posts.map((post: PostModel) => {
-            return (
-              <div key={post.id} className={styles.post}>
-                <PostCard {...post} />
-              </div>
-            )
-          })}
-        </div>
-      )
-    }
+    return (
+      <div className={styles.flex}>
+        {sortedPosts.map((post: PostModel) => (
+          <div key={post.id} className={styles.post}>
+            <PostCard {...post} />
+          </div>
+        ))}
+      </div>
+    )
   }
 
   function renderLoading(): React.ReactElement | null {
@@ -38,13 +51,8 @@ export function PostsListMain(): React.ReactElement {
       return null
     }
 
-    // review
     return (
-      <div className="d-flex justify-content-center align-items-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <div>Loading...</div>
     )
   }
 
@@ -54,15 +62,17 @@ export function PostsListMain(): React.ReactElement {
     }
 
     return (
-      <div className="d-flex justify-content-center align-items-center">
-        <div className="alert alert-danger" role="alert">Loading error</div>
-      </div>
+      <div role="alert">Loading error</div>
     )
   }
 
   return (
     <>
-      {renderPosts()}
+      <button className={styles.button} onClick={handleClickButtonSort} disabled={loading || !!error}>
+        {sortOrder === 'az' ? 'Reset sorting' : 'Sort by name A-Z'}
+      </button>
+
+      {renderPostsList()}
       {renderLoading()}
       {renderError()}
     </>

@@ -6,3 +6,16 @@
   gap: 15px;
   justify-content: center;
 }
+.button {
+  background-color: #8cc187;
+  display: block;
+  margin: 40px 0 18px;
+  padding: 12px;
+  color: white;
+  border-radius: 20px;
+  transition-duration: .2s;
+  &:hover {
+    background-color: #77ad73;
+    cursor: pointer;
+  }
+}
