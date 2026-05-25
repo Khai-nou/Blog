@@ -40,7 +40,7 @@ export function Header(): React.ReactElement {
         </ul>
         <form className={styles.form} role="search">
           <input className={styles.input} type="search" placeholder="Search..." aria-label="Search" onChange={handleChangeInputSearch} />
-          <Link to={`/search-results/${searchQuery}`}><button className={styles.button} type="submit" disabled={!searchQuery}>Search</button></Link>
+          <Link to={`/search-results/${searchQuery}/1`}><button className={styles.button} type="submit" disabled={!searchQuery}>Search</button></Link>
         </form>
         <UserPick userName={user}></UserPick>
       </nav>

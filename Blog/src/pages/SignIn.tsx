@@ -8,7 +8,7 @@ export function SignIn(): React.ReactElement {
 
   return (
     <>
-      <Breadcrumb><Link to="/">Home</Link></Breadcrumb>
+      <Breadcrumb><Link to="/all/1">Home</Link></Breadcrumb>
       <Title>Sign In</Title>
       <Island>
         <FormSignIn />

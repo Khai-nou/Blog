@@ -9,7 +9,7 @@ export function Post(): React.ReactElement {
   return (
     <div>
       <Breadcrumb postNumber={` | Post ${postId}`}>
-        <Link to="/">Home</Link>
+        <Link to="/all/1">Home</Link>
       </Breadcrumb>
       <PostComponent />
     </div>

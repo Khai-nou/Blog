@@ -28,7 +28,7 @@ export function FormSignIn(props: FormSignInProps): React.ReactElement {
 
   function handleSubmitForm(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
-    navigate('/')
+    navigate('/all/1')
     
     return formData
   }

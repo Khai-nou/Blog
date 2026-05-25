@@ -11,6 +11,10 @@ type PaginationProps = {
   isActive: boolean
 }
 
+function resolveActiveClass({ isActive }: PaginationProps) {
+  return isActive ? `${styles.paginationLink} ${styles.active}` : `${styles.paginationLink}`
+}
+
 export function PostsListMain(): React.ReactElement {
   const { currentPage } = useParams()
   const { data: posts, totalPages, loading, error } = useAppSelector((state): PostsState => state.posts)
@@ -20,17 +24,29 @@ export function PostsListMain(): React.ReactElement {
   const [sortOrder, setSortOrder] = useState<false | 'asc'>(false)
 
   useEffect((): void => {
-    const offset = (Number(currentPage) - 1) * 15
-    dispatch(fetchPosts({ limit: 15, offset }))
+    const page = Number(currentPage) || 1
+    const limit = 15
+    const maxPosts = 500
+    const offset = (page - 1) * limit
+
+    // для последней страницы ограничиваем кол-во постов
+    const adjustedLimit = offset + limit > maxPosts ? maxPosts - offset : limit
+
+    if (offset < maxPosts) {
+      dispatch(fetchPosts({ limit: adjustedLimit, offset }))
+    }
   }, [currentPage, dispatch])
 
   // возвращаем отсортированную копию
   const sortedPosts = useMemo(() => {
     if (!posts) return []
+
+    const limitedPosts = posts.slice(0, 500)
+
     if (sortOrder === 'asc') {
-      return [...posts].sort((a, b) => a.title.localeCompare(b.title))
+      return [...limitedPosts].sort((a, b) => a.title.localeCompare(b.title))
     }
-    return posts
+    return limitedPosts
   }, [posts, sortOrder])
 
   // обработчик для кнопки сортировки
@@ -70,7 +86,7 @@ export function PostsListMain(): React.ReactElement {
     }
 
     return (
-      <div role="alert">Loading error</div>
+      <div>Loading error</div>
     )
   }
 
@@ -79,11 +95,10 @@ export function PostsListMain(): React.ReactElement {
       return null
     }
 
-    function resolveActiveClass({ isActive }: PaginationProps) {
-      return isActive ? `${styles.paginationLink} ${styles.active}` : `${styles.paginationLink}`
-    }
+    const limitedTotalPages = Math.min(totalPages, Math.ceil(500 / 15))
 
-    const paginationScheme = buildPagination(Number(currentPage), totalPages)
+    const paginationScheme = buildPagination(Number(currentPage), limitedTotalPages)
+
     return (
       <nav>
         <ul className={styles.pagination}>

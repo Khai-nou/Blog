@@ -24,7 +24,7 @@ const routes: RouteObject[] = [
         Component: Post,
       },
       {
-        path: '/search-results/:searchQuery',
+        path: '/search-results/:searchQuery/:currentPage',
         Component: SearchResults,
       },
       {
