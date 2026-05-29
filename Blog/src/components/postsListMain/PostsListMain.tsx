@@ -1,15 +1,11 @@
 import styles from './PostsListMain.module.scss'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
-import type { PostsState, PostModel } from '../../types'
+import type { PostsState, PostModel, PaginationProps } from '../../types'
 import { PostCard } from '../postCard/PostCard'
 import { useEffect, useState, useMemo } from 'react'
 import { fetchPosts } from '../../redux/posts-slice'
 import { useParams, NavLink } from 'react-router'
 import { buildPagination } from '../../utils/buildPagination'
-
-type PaginationProps = {
-  isActive: boolean
-}
 
 function resolveActiveClass({ isActive }: PaginationProps) {
   return isActive ? `${styles.paginationLink} ${styles.active}` : `${styles.paginationLink}`

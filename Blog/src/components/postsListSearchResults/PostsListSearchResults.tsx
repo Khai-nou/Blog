@@ -1,15 +1,11 @@
 import styles from './PostsListSearchResults.module.scss'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
-import type { PostsState, PostModel } from '../../types'
+import type { PostsState, PostModel, PaginationProps } from '../../types'
 import { PostCard } from '../postCard/PostCard'
 import { useEffect, useMemo } from 'react'
 import { fetchPosts } from '../../redux/posts-slice'
 import { NavLink, useParams } from 'react-router'
 import { buildPagination } from '../../utils/buildPagination'
-
-type PaginationProps = {
-  isActive: boolean
-}
 
 export function PostsListSearchResults(): React.ReactElement {
   const { currentPage, searchQuery } = useParams()
@@ -35,7 +31,9 @@ export function PostsListSearchResults(): React.ReactElement {
   }, [dispatch])
 
   function renderPosts() {
-    if (error || loading || postsToShow.length === 0) return null
+    if (error || loading || postsToShow.length === 0) {
+      return <div>No matching results for `{searchQuery}`</div>
+    }
 
     return (
       <div className={styles.flex}>

@@ -1,14 +1,5 @@
 import styles from './FormField.module.scss'
-
-type FormFieldProps = {
-  id: string
-  label: string
-  type: string
-  value: string | undefined
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  ref?: React.RefObject<HTMLInputElement | null>
-  valueChecked?: boolean
-}
+import type { FormFieldProps } from '../../types'
 
 export function FormField({ id, label, type, value, valueChecked, onChange, ref }: FormFieldProps): React.ReactElement {
   

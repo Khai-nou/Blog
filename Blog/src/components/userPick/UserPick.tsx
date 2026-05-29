@@ -1,9 +1,5 @@
-import type { UserContextType } from '../../types'
+import type { UserPickProps } from '../../types'
 import styles from './UserPick.module.scss'
-
-type UserPickProps = {
-  userName: UserContextType['user']
-}
 
 export function UserPick(props: UserPickProps): React.ReactElement | null {
   if (!props.userName) {
