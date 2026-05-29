@@ -1,5 +1,5 @@
-import { Title } from "../components/title/Title";
-import { PostsListMain } from "../components/postsListMain/PostsListMain";
+import { Title } from '../components/title/Title'
+import { PostsListMain } from '../components/postsListMain/PostsListMain'
 
 export function Main(): React.ReactElement {
 
@@ -10,4 +10,3 @@ export function Main(): React.ReactElement {
     </>
   )
 }
-

@@ -1,10 +1,5 @@
-import { ReactNode } from 'react'
 import styles from './Breadcrumb.module.scss'
-
-type BreadcrumbProps = {
-  children: ReactNode
-  postNumber?: number | string
-}
+import type { BreadcrumbProps } from '../../types'
 
 export function Breadcrumb(props: BreadcrumbProps): React.ReactElement {
   return (

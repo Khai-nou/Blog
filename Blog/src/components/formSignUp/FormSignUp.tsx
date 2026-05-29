@@ -3,13 +3,7 @@ import { FormField } from '../formField/FormField'
 import styles from './FormSignUp.module.scss'
 import { ChangeEvent } from 'react'
 import { Link } from 'react-router'
-
-type formSignUpProps = {
-  name?: string
-  email?: string
-  password?: string
-  passwordConfirm?: string
-}
+import type { formSignUpProps } from '../../types'
 
 export function FormSignUp(props: formSignUpProps): React.ReactElement {
   const [name, setName] = useState('')

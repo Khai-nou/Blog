@@ -1,15 +1,11 @@
 import { NavLink } from 'react-router'
 import { UserPick } from '../userPick/UserPick'
 import { useContext, useState } from 'react'
-import type { UserContextType } from '../../types'
+import type { UserContextType, HeaderProps } from '../../types'
 import { UserContext } from '../../contexts/UserContext'
 import styles from './Header.module.scss'
 import { Link } from 'react-router'
 import logo from '../../assets/logo.png'
-
-type HeaderProps = {
-  isActive: boolean
-}
 
 export function Header(): React.ReactElement {
   const { user } = useContext<UserContextType>(UserContext)

@@ -1,8 +1,4 @@
-import { ReactNode } from "react"
-
-type MainProps = {
-  children: ReactNode
-}
+import type { MainProps } from '../../types'
 
 export function Main(props: MainProps): React.ReactElement {
   return (

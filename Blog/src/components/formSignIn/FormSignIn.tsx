@@ -3,11 +3,7 @@ import { FormField } from '../formField/FormField'
 import styles from './FormSignIn.module.scss'
 import { ChangeEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
-
-type FormSignInProps = {
-  email?: string
-  password?: string
-}
+import type { FormSignInProps } from '../../types'
 
 export function FormSignIn(props: FormSignInProps): React.ReactElement {
   const [email, setEmail] = useState('')

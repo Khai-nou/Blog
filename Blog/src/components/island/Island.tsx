@@ -1,9 +1,5 @@
-import { ReactNode } from 'react'
 import styles from './Island.module.scss'
-
-type IslandProps = {
-  children: ReactNode
-}
+import type { IslandProps } from '../../types'
 
 export function Island(props: IslandProps): React.ReactElement {
   return (
